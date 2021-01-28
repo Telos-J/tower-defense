@@ -6,16 +6,45 @@
     box-sizing: border-box;
 }
 
+body {
+    width: 100vw;
+    height: 100vw;
+    overflow: hidden;
+}
+
 #josh-path {
     position: absolute;
-    width: 100%;
+    /* width: 100%; */
     height: 100%;
+    background-image: url(img/Wattle_trees.jpg);
+    background-size: cover;
 }
 
 .virus {
+    display: none;
+    position: absolute;
     width: 5%;
 }
 
 .hidden {
     display: none;
 }
+
+.scp-682 {
+    position: absolute;
+    width: 15vw;
+}
+
+.scp682-base, .scp682-attack {
+    opacity: 0;
+}
+
+.egg {
+    position: absolute;
+    right: 0;
+    width: 5vw;
+    height: 5vw;
+    cursor: pointer;
+    z-index: 10;
+}
+
