@@ -27,3 +27,6 @@ window.setInterval(() => {
 }, 5000);
 
 export { gameObjects }
+
+
+
