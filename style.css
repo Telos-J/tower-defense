@@ -8,35 +8,16 @@
 
 body {
     width: 100vw;
-    height: 100vw;
+    height: 100vh;
     overflow: hidden;
+    background-color:aliceblue;
 }
 
-#josh-path {
+canvas {
     position: absolute;
-    /* width: 100%; */
-    height: 100%;
-    background-image: url(img/Wattle_trees.jpg);
-    background-size: cover;
-}
-
-.virus {
-    display: none;
-    position: absolute;
-    width: 5%;
-}
-
-.hidden {
-    display: none;
-}
-
-.scp-682 {
-    position: absolute;
-    width: 15vw;
-}
-
-.scp682-base, .scp682-attack {
-    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .egg {

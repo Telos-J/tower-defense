@@ -1,32 +1,17 @@
-import { colorSets, pathSets, Virus } from './virus.js';
+import { game } from './game.js';
+import { Virus } from './virus.js';
 import { Reptile } from './reptile.js';
-
-gsap.registerPlugin(MotionPathPlugin, MorphSVGPlugin);
-
-const gameObjects = {
-    viruses: [],
-    reptiles: []
-}
-
-window.addEventListener('load', Reptile.setup)
+import { assets } from './assets.js'
 
 document.querySelector('.egg').addEventListener('click', (e) => {
     const reptile = new Reptile()
-    reptile.create()
-    reptile.startMove(e)
+    game.pushRepile(reptile)
 })
 
-window.setInterval(() => {
-    const keys = Object.keys(colorSets);
-    const colorSet = colorSets[keys[keys.length * Math.random() << 0]];
-    const virus = new Virus(colorSet, pathSets.default)
-    virus.create()
-    virus.move()
-    virus.animate(pathSets.wiggle)
-    gameObjects.viruses.push(virus)
-}, 5000);
-
-export { gameObjects }
+window.setTimeout(() => {
+    const virus = new Virus(assets.frameSets.virusRedIdle)
+    game.pushVirus(virus)
+}, 1000);
 
 
-
+game.init()
