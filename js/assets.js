@@ -65,7 +65,7 @@ class FrameSet {
         const frameSet = Promise.all(imgs)
         frameSet.then(imgs => {
             for (let img of imgs) {
-                const frame = new Frame(img, 0, 0, img.height, img.width)
+                const frame = new Frame(img, 0, 0, img.width, img.height)
                 self.frames.push(frame)
             }
             console.log("Frameset loaded")
