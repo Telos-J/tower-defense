@@ -1,16 +1,14 @@
+import { Vector2 } from './vector.js';
 import { display } from './display.js';
 import { assets } from './assets.js';
-import { Vector2 } from './vector.js';
+import { map } from './map.js';
 
 class Game {
-    constructor(display, assets) {
-        this.display = display;
-        this.assets = assets;
+    constructor() {
         this._gameObjects = [];
         this._viruses = [];
         this._reptiles = [];
         this.mousePos = new Vector2();
-        this.tileSize = 80;
     }
 
     get viruses() {
@@ -32,55 +30,45 @@ class Game {
     }
 
     async init() {
-        await this.assets.loadAssets();
-        await this.display.init();
+        await assets.loadAssets();
+        await display.init();
+        await map.init()
 
         this.addMouseMove()
         this.start()
     }
 
     addMouseMove() {
-        this.display.canvas.addEventListener('mousemove', (event) => {
-            this.mousePos = this.display.convertToBufferCoord(
+        display.canvas.addEventListener('mousemove', (event) => {
+            this.mousePos = display.convertToBufferCoord(
                 new Vector2(event.clientX, event.clientY)
             )
         })
     }
 
-    drawBackground() {
-        this.display.buffer.fillStyle = 'white';
-        this.display.buffer.fillRect(
-            0,
-            0,
-            this.display.buffer.canvas.width,
-            this.display.buffer.canvas.height
-        );
+    clear() {
+        display.buffer.clearRect(0, 0, display.buffer.canvas.width, display.buffer.canvas.height);
+        display.ctx.clearRect(0, 0, display.canvas.width, display.canvas.height);
     }
 
     drawGrid() {
-        this.display.buffer.strokeStyle = 'black';
-        const cols = this.display.canvas.width / this.tileSize;
-        const rows = this.display.canvas.height / this.tileSize;
-        for (let i = 0; i < cols; i++) {
-            this.display.buffer.beginPath();
-            this.display.buffer.moveTo(i * this.tileSize, 0);
-            this.display.buffer.lineTo(i * this.tileSize, this.display.buffer.canvas.height);
-            this.display.buffer.stroke();
+        display.buffer.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+        const cols = display.buffer.canvas.width / map.tileSize;
+        const rows = display.buffer.canvas.height / map.tileSize;
+        for (let i = 0; i <= cols; i++) {
+            display.buffer.beginPath();
+            display.buffer.moveTo(i * map.tileSize, 0);
+            display.buffer.lineTo(i * map.tileSize, display.buffer.canvas.height);
+            display.buffer.stroke();
         }
-        for (let i = 0; i < rows; i++) {
-            this.display.buffer.beginPath();
-            this.display.buffer.moveTo(0, i * this.tileSize);
-            this.display.buffer.lineTo(this.display.canvas.width, i * this.tileSize);
-            this.display.buffer.stroke();
-        }
-
-        if (this.mousePos.magnitude()) {
-            const row = Math.floor(this.mousePos.x / this.tileSize);
-            const col = Math.floor(this.mousePos.y / this.tileSize);
-            this.display.buffer.fillStyle = 'rgba(0, 0, 0, 0.5)';
-            this.display.buffer.fillRect(row * this.tileSize, col * this.tileSize, this.tileSize, this.tileSize)
+        for (let i = 0; i <= rows; i++) {
+            display.buffer.beginPath();
+            display.buffer.moveTo(0, i * map.tileSize);
+            display.buffer.lineTo(display.buffer.canvas.width, i * map.tileSize);
+            display.buffer.stroke();
         }
     }
+
 
     update() {
         for (const virus of this.viruses) {
@@ -89,21 +77,23 @@ class Game {
     }
 
     render() {
-        this.drawBackground()
-        this.drawGrid()
+        this.clear()
+        map.draw()
+        map.previewMouse()
+        // this.drawGrid()
         for (const virus of this.viruses) {
-            virus.draw(this.display.buffer);
+            virus.draw(display.buffer);
         }
-        this.display.ctx.drawImage(
-            this.display.buffer.canvas,
+        display.ctx.drawImage(
+            display.buffer.canvas,
             0,
             0,
-            this.display.buffer.canvas.width,
-            this.display.buffer.canvas.height,
+            display.buffer.canvas.width,
+            display.buffer.canvas.height,
             0,
             0,
-            this.display.canvas.width,
-            this.display.canvas.height
+            display.canvas.width,
+            display.canvas.height
         )
     }
 

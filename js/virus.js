@@ -1,4 +1,4 @@
-import { game } from './game.js';
+import { map } from './map.js';
 
 class Virus {
     constructor(frameSet) {
@@ -6,7 +6,7 @@ class Virus {
         this.frameSet = frameSet;
         this.frameHold = 2;
         this.frameHoldIndex = this.frameHold;
-        this.size = game.tileSize;
+        this.size = map.tileSize;
     }
 
     animate() {

@@ -5,7 +5,7 @@ class Assets {
 
     addFrameSets(...frameSets) {
         for (let frameSet of frameSets) {
-            this.frameSets[frameSet[0]] = frameSet[1] ;
+            this.frameSets[frameSet[0]] = frameSet[1];
         }
     }
 
@@ -44,7 +44,7 @@ class FrameSet {
         this.numFrames = numFrames;
         this.prefix = prefix;
     }
-    
+
     loadImage(url) {
         return new Promise((resolve, reject) => {
             const img = new Image();
@@ -53,7 +53,7 @@ class FrameSet {
             img.src = url;
         });
     }
-    
+
     loadFrameSet() {
         const imgs = [];
         const self = this;
@@ -78,4 +78,5 @@ class FrameSet {
 assets.addFrameSets(
     ["virusBlueIdle", new FrameSet('img/virus/blue/virus', 24)],
     ["virusRedIdle", new FrameSet('img/virus/red/virus', 24)],
+    ["tile", new FrameSet('img/tileset/tile', 4)],
 )

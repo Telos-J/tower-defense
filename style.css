@@ -14,6 +14,8 @@ body {
 }
 
 canvas {
+    width: 80%;
+    aspect-ratio: 16/9;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -21,10 +23,10 @@ canvas {
 }
 
 .egg {
-    position: absolute;
-    right: 0;
     width: 5vw;
     height: 5vw;
+    position: absolute;
+    right: 0;
     cursor: pointer;
     z-index: 10;
 }
