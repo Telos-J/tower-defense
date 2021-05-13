@@ -44,6 +44,13 @@ class Game {
                 new Vector2(event.clientX, event.clientY)
             )
         })
+
+        display.canvas.addEventListener('mousedown', () => {
+            this.overwrite = true;
+        })
+        display.canvas.addEventListener('mouseup', () => {
+            this.overwrite = false;
+        })
     }
 
     clear() {
@@ -78,8 +85,7 @@ class Game {
 
     render() {
         this.clear()
-        map.draw()
-        map.previewMouse()
+        map.render()
         // this.drawGrid()
         for (const virus of this.viruses) {
             virus.draw(display.buffer);
