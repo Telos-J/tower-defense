@@ -74,9 +74,10 @@ class Map {
         this.grid[row][col].rotation = rotation;
     }
 
-    checkEmpty(row, col) {
-        if (!this.grid[row] || !this.grid[row][col]) return
-        return this.grid[row][col].frame
+    isEmpty(row, col) {
+        return !this.grid[row] ||
+            !this.grid[row][col] ||
+            !this.grid[row][col].frame ? true : false
     }
 
     preview() {
@@ -93,15 +94,23 @@ class Map {
         // White block for middle
         this.updateTile(row, col, undefined, 0)
 
-        this.updateTile(row + 1, col, side, 0)
-        if (this.checkEmpty(row, col - 1)) this.updateTile(row, col - 1, side, Math.PI / 2)
-        this.updateTile(row - 1, col, side, Math.PI)
-        if (this.checkEmpty(row, col + 1)) this.updateTile(row, col + 1, side, 3 * Math.PI / 2)
+        if (!this.isEmpty(row + 1, col))
+            this.updateTile(row + 1, col, side, 0)
+        if (!this.isEmpty(row, col - 1))
+            this.updateTile(row, col - 1, side, Math.PI / 2)
+        if (!this.isEmpty(row - 1, col))
+            this.updateTile(row - 1, col, side, Math.PI)
+        if (!this.isEmpty(row, col + 1))
+            this.updateTile(row, col + 1, side, 3 * Math.PI / 2)
 
-        if (this.checkEmpty(row, col + 1)) this.updateTile(row - 1, col + 1, smallCorner, 0)
-        if (this.checkEmpty(row, col + 1)) this.updateTile(row + 1, col + 1, smallCorner, Math.PI / 2)
-        if (this.checkEmpty(row, col - 1)) this.updateTile(row + 1, col - 1, smallCorner, Math.PI)
-        if (this.checkEmpty(row, col - 1)) this.updateTile(row - 1, col - 1, smallCorner, 3 * Math.PI / 2)
+        if (!this.isEmpty(row, col + 1))
+            this.updateTile(row - 1, col + 1, smallCorner, 0)
+        if (!this.isEmpty(row, col + 1))
+            this.updateTile(row + 1, col + 1, smallCorner, Math.PI / 2)
+        if (!this.isEmpty(row, col - 1))
+            this.updateTile(row + 1, col - 1, smallCorner, Math.PI)
+        if (!this.isEmpty(row, col - 1))
+            this.updateTile(row - 1, col - 1, smallCorner, 3 * Math.PI / 2)
     }
 }
 

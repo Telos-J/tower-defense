@@ -45,10 +45,10 @@ class Game {
             )
         })
 
-        display.canvas.addEventListener('mousedown', () => {
+        window.addEventListener('mousedown', () => {
             this.overwrite = true;
         })
-        display.canvas.addEventListener('mouseup', () => {
+        window.addEventListener('mouseup', () => {
             this.overwrite = false;
         })
     }
