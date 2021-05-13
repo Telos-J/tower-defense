@@ -94,6 +94,7 @@ class Map {
         // White block for middle
         this.updateTile(row, col, undefined, 0)
 
+        // sides
         if (!this.isEmpty(row + 1, col))
             this.updateTile(row + 1, col, side, 0)
         if (!this.isEmpty(row, col - 1))
@@ -103,6 +104,7 @@ class Map {
         if (!this.isEmpty(row, col + 1))
             this.updateTile(row, col + 1, side, 3 * Math.PI / 2)
 
+        // small corners
         if (!this.isEmpty(row, col + 1) && !this.isEmpty(row - 1, col))
             this.updateTile(row - 1, col + 1, smallCorner, 0)
         if (!this.isEmpty(row, col + 1) && !this.isEmpty(row + 1, col))
@@ -111,6 +113,8 @@ class Map {
             this.updateTile(row + 1, col - 1, smallCorner, Math.PI)
         if (!this.isEmpty(row, col - 1) && !this.isEmpty(row - 1, col))
             this.updateTile(row - 1, col - 1, smallCorner, 3 * Math.PI / 2)
+
+        // TODO: Big corners for L paving
     }
 }
 
