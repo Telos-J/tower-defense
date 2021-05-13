@@ -103,13 +103,13 @@ class Map {
         if (!this.isEmpty(row, col + 1))
             this.updateTile(row, col + 1, side, 3 * Math.PI / 2)
 
-        if (!this.isEmpty(row, col + 1))
+        if (!this.isEmpty(row, col + 1) && !this.isEmpty(row - 1, col))
             this.updateTile(row - 1, col + 1, smallCorner, 0)
-        if (!this.isEmpty(row, col + 1))
+        if (!this.isEmpty(row, col + 1) && !this.isEmpty(row + 1, col))
             this.updateTile(row + 1, col + 1, smallCorner, Math.PI / 2)
-        if (!this.isEmpty(row, col - 1))
+        if (!this.isEmpty(row, col - 1) && !this.isEmpty(row + 1, col))
             this.updateTile(row + 1, col - 1, smallCorner, Math.PI)
-        if (!this.isEmpty(row, col - 1))
+        if (!this.isEmpty(row, col - 1) && !this.isEmpty(row - 1, col))
             this.updateTile(row - 1, col - 1, smallCorner, 3 * Math.PI / 2)
     }
 }
