@@ -22,15 +22,21 @@ class Map {
             for (const col in this.grid[row]) {
                 const item = this.grid[row][col]
                 item.frame = assets.frameSets.tile.frames[0];
+                item.row = row;
+                item.col = col;
             }
         }
     }
 
     render() {
         const grid = _.cloneDeep(this.grid)
+        const leader = this.leader
         this.preview()
         this.draw()
-        if (!game.overwrite) this.grid = grid
+        if (!game.overwrite) {
+            this.grid = grid
+            this.leader = leader
+        }
     }
 
     draw() {
@@ -80,6 +86,27 @@ class Map {
             !this.grid[row][col].frame ? true : false
     }
 
+    isLeader(row, col) {
+        return row.toString() === this.leader?.row && col.toString() === this.leader?.col
+    }
+
+    canDraw(row, col) {
+        if (!this.leader &&
+            row > 0 &&
+            row < this.grid.length - 1 &&
+            col > 0 &&
+            col < this.grid[0].length - 1)
+            return false
+        else if (
+            this.leader &&
+            !this.isLeader(row - 1, col) &&
+            !this.isLeader(row + 1, col) &&
+            !this.isLeader(row, col - 1) &&
+            !this.isLeader(row, col + 1)
+        ) return false
+        else return true
+    }
+
     preview() {
         if (!game.mousePos.magnitude()) return
 
@@ -91,8 +118,11 @@ class Map {
         const corner = assets.frameSets.tile.frames[2];
         const smallCorner = assets.frameSets.tile.frames[3];
 
+        if (!this.canDraw(row, col)) return
+
         // White block for middle
         this.updateTile(row, col, undefined, 0)
+        this.leader = this.grid[row][col]
 
         // sides
         if (!this.isEmpty(row + 1, col))

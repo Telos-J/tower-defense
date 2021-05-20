@@ -47,6 +47,7 @@ class Game {
 
         window.addEventListener('mousedown', () => {
             this.overwrite = true;
+            if (map.state === 'init') map.state = 'start'
         })
         window.addEventListener('mouseup', () => {
             this.overwrite = false;
