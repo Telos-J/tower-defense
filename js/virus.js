@@ -1,12 +1,16 @@
 import { map } from './map.js';
 
 class Virus {
-    constructor(frameSet) {
+    constructor(frameSet, position) {
         this.frameIndex = 0;
         this.frameSet = frameSet;
         this.frameHold = 2;
         this.frameHoldIndex = this.frameHold;
         this.size = map.tileSize;
+        this.position = position;
+        this.pathIndex = 0;
+        this.speed = 2;
+        this.state = 'alive'
     }
 
     animate() {
@@ -26,17 +30,22 @@ class Virus {
             frame.y,
             frame.width,
             frame.height,
-            0,
-            0,
+            this.position.x,
+            this.position.y,
             this.size,
             this.size
         )
     }
 
     move() {
-    }
+        const tile = map.path[this.pathIndex + 1]
+        if (!tile) return this.state = 'end'
 
-    kill() {
+        if (this.position.x < tile.col * map.tileSize) this.position.x += this.speed
+        else if (this.position.x > tile.col * map.tileSize) this.position.x -= this.speed
+        else if (this.position.y < tile.row * map.tileSize) this.position.y += this.speed
+        else if (this.position.y > tile.row * map.tileSize) this.position.y -= this.speed
+        else this.pathIndex++
     }
 }
 

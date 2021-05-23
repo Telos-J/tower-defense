@@ -9,6 +9,7 @@ class Game {
         this._viruses = [];
         this._reptiles = [];
         this.mousePos = new Vector2();
+        this.state = 'build';
     }
 
     get viruses() {
@@ -81,12 +82,17 @@ class Game {
     update() {
         for (const virus of this.viruses) {
             virus.animate();
+            virus.move();
         }
+        this._viruses = this._viruses.filter((virus) => virus.state === 'alive')
     }
 
     render() {
         this.clear()
-        map.render()
+        if (this.state === 'build')
+            map.render()
+        else if (this.state === 'start')
+            map.render2()
         // this.drawGrid()
         for (const virus of this.viruses) {
             virus.draw(display.buffer);
